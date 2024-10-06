@@ -7,6 +7,12 @@
 #define _FN1 1
 #define _FN2 2
 
+enum custom_keycodes {
+  MACRO1 = SAFE_RANGE,
+  MACRO2,
+  MACRO3
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BASE] = LAYOUT_ortho_4x4(
@@ -29,3 +35,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch(keycode) {
+    case MACRO1:
+      if (record->event.pressed) {
+        SEND_STRING("Hello, world!");
+      } else {
+        // Nothing on the upstroke
+      }
+      return false;
+    case MACRO2:
+      if (record->event.pressed) {
+        SEND_STRING("Hello, world!");
+      } else {
+        // Nothing on the upstroke
+      }
+      return false;
+    case MACRO3:
+      if (record->event.pressed) {
+        SEND_STRING("Hello, world!");
+      } else {
+        // Nothing on the upstroke
+      }
+      return false;
+  }
+}
