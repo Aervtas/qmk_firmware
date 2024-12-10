@@ -25,6 +25,7 @@ enum planck_layers {
   _GAME,
   _MACOS,
   _MODLYR,
+  _MODLYRM,
   _LOWER,
   _RAISE,
   _PLOVER,
@@ -36,6 +37,7 @@ enum planck_keycodes {
   GAME,
   MACOS,
   MODLYR,
+  MODLYRM,
   PLOVER,
   BACKLIT,
   EXT_PLV
@@ -48,74 +50,92 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |  `   |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+ * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | Alt  | GUI  | MOD  |Lower |    Space    |Raise | Up | Down | Left |Right |
+ * | ESC  | Alt  | GUI  | MOD  |Lower |CTL/SP|Space |Raise | Up  | Down | Left  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
-    KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    KC_LCTL, KC_LALT, KC_LGUI, MODLYR,  LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
+    KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+    KC_ESC,  KC_LALT, KC_LGUI, MODLYR,  LOWER,   LCTL_T(KC_SPC),  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
 ),
 
 /* Gaming
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * | ESC  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+ * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | Alt  | GUI  | MOD  |Lower |    Space    |Raise | Up | Down | Left |Right |
+ * | Ctrl |      |      | MOD  |Lower |Space |  Alt |Raise |  /  | Left | Down  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_GAME] = LAYOUT_planck_grid(
     KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    KC_LCTL, KC_LALT, KC_LGUI, MODLYR,  LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_UP,   KC_ENT,
+    KC_LCTL, XXXXXXX, XXXXXXX, MODLYR,  LOWER,   KC_SPC,  KC_LALT, RAISE,   KC_SLSH, KC_LEFT, KC_DOWN, KC_RGHT
 ),
 
 /* Mac OS
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |  `   |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+ * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | Alt  | GUI  | MOD  |Lower |    Space    |Raise | Up | Down | Left |Right |
+ * | Esc  | Alt  | Ctrl | MOD  |Lower |GUI/SP|Space |Raise | Up  | Down | Left  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_MACOS] = LAYOUT_planck_grid(
-    KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    KC_LCTL, KC_LALT, KC_LGUI, MODLYR,  LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
+    KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+    KC_ESC,  KC_LALT, KC_LCTL, MODLYR,  LOWER,   LGUI_T(KC_SPC),  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
 ),
 
 /* Mod Layer - additional
  * ,-----------------------------------------------------------------------------------.
- * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Bksp |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  |   {  |   }  |  |   |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO ~ |ISO | | Home | End  |      |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_MODLYR] = LAYOUT_planck_grid(
-    _______, KC_P7,   KC_P8, KC_P9,   _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, KC_P4,   KC_P5, KC_P6,   _______, _______, _______, _______, _______, _______, _______, _______,
+    KC_NUM,  KC_P7,   KC_P8, KC_P9,   _______, _______, _______, _______, _______, _______, _______, _______,
+    KC_CAPS, KC_P4,   KC_P5, KC_P6,   _______, _______, _______, _______, _______, _______, _______, _______,
     _______, KC_P1,   KC_P2, KC_P3,   KC_PENT, _______, _______, _______, _______, _______, _______, _______,
     _______, KC_PDOT, KC_P0, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
+/* Mod Layer - additional
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_MODLYR] = LAYOUT_planck_grid(
+    KC_NUM,  KC_P7,   KC_P8, KC_P9,   _______, _______, _______, _______, _______, _______, _______, _______,
+    KC_CAPS, KC_P4,   KC_P5, KC_P6,   _______, _______, _______, _______, _______, _______, _______, _______,
+    KC_MCTL, KC_P1,   KC_P2, KC_P3,   KC_PENT, _______, _______, _______, _______, _______, _______, _______,
+    KC_LPAD, KC_PDOT, KC_P0, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
 /* Lower
@@ -177,7 +197,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|Plover|      |
+ * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap|Qwerty| Game |MacOS |Plover|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -287,36 +307,41 @@ uint8_t muse_offset = 70;
 uint16_t muse_tempo = 50;
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-  if (muse_mode) {
-    if (IS_LAYER_ON(_RAISE)) {
-      if (clockwise) {
-        muse_offset++;
-      } else {
-        muse_offset--;
-      }
+    if (muse_mode) {
+        if (IS_LAYER_ON(_RAISE)) {
+            if (clockwise) {
+                muse_offset++;
+            } else {
+                muse_offset--;
+            }
+        } else {
+            if (clockwise) {
+                muse_tempo+=1;
+            } else {
+                muse_tempo-=1;
+            }
+        }
     } else {
-      if (clockwise) {
-        muse_tempo+=1;
-      } else {
-        muse_tempo-=1;
-      }
+        switch (get_highest_layer(layer_state)) {
+            case _QWERTY:
+                if (clockwise) {
+                    tap_code(KC_WH_L);
+                } else {
+                    tap_code(KC_WH_R);
+                }
+                break;
+            case _MACOS:
+                if (clockwise) {
+                    tap_code(KC_PGDN);
+                } else {
+                    tap_code(KC_PGUP);
+                }
+            default:
+                break;
+        }
+        
     }
-  } else {
-    if (clockwise) {
-      #ifdef MOUSEKEY_ENABLE
-        tap_code(KC_MS_WH_DOWN);
-      #else
-        tap_code(KC_PGDN);
-      #endif
-    } else {
-      #ifdef MOUSEKEY_ENABLE
-        tap_code(KC_MS_WH_UP);
-      #else
-        tap_code(KC_PGUP);
-      #endif
-    }
-  }
-    return true;
+    return false;
 }
 
 bool dip_switch_update_user(uint8_t index, bool active) {

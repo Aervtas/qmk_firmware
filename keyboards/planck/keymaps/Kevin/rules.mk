@@ -3,3 +3,4 @@ ifeq ($(strip $(AUDIO_ENABLE)), yes)
 endif
 
 ENCODER_ENABLE = yes
+MOUSEKEY_ENABLE = yes

@@ -47,3 +47,13 @@
 
 // Most tactile encoders have detents every 4 stages
 #define ENCODER_RESOLUTION 4
+
+// Define Mouse Key behavior
+#define MOUSEKEY_WHEEL_DELAY 10
+#define MOUSEKEY_WHEEL_INTERVAL 50
+#define MOUSEKEY_WHEEL_MAX_SPEED 5
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 20
+
+// Define Mod-Tap Behavior
+#define TAPPING_TERM 200    // milliseconds before it turns from a tap into a hold
+#define PERMISSIVE_HOLD     // allows skipping of TAPPING_TERM if there is another key held at the same time
