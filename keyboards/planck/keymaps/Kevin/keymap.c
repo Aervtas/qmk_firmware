@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-    KC_ESC,  KC_LALT, KC_LCTL, MODLYR,  LOWER,   LGUI_T(KC_SPC),  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
+    KC_ESC,  KC_LALT, KC_LCTL, MODLYRM,  LOWER,  LGUI_T(KC_SPC),  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
 ),
 
 /* Mod Layer - additional
@@ -120,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_PDOT, KC_P0, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
-/* Mod Layer - additional
+/* Mod Layer - Mac Version
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -131,11 +131,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_MODLYR] = LAYOUT_planck_grid(
-    KC_NUM,  KC_P7,   KC_P8, KC_P9,   _______, _______, _______, _______, _______, _______, _______, _______,
-    KC_CAPS, KC_P4,   KC_P5, KC_P6,   _______, _______, _______, _______, _______, _______, _______, _______,
-    KC_MCTL, KC_P1,   KC_P2, KC_P3,   KC_PENT, _______, _______, _______, _______, _______, _______, _______,
-    KC_LPAD, KC_PDOT, KC_P0, _______, _______, _______, _______, _______, _______, _______, _______, _______
+[_MODLYRM] = LAYOUT_planck_grid(
+    _______, KC_HOME, KC_UP,   KC_PGUP, _______, _______, _______, _______, KC_P7,   KC_P8, KC_P9,   KC_BSPC,
+    KC_CAPS, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, _______, KC_P4,   KC_P5, KC_P6,   _______,
+    KC_MCTL, KC_END,  _______, KC_PGDN, _______, _______, _______, _______, KC_P1,   KC_P2, KC_P3,   KC_PENT,
+    KC_LPAD, _______, _______, _______, _______, _______, _______, _______, _______, KC_P0, KC_PDOT, _______
 ),
 
 /* Lower
@@ -248,6 +248,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             layer_on(_MODLYR);
         } else {
             layer_off(_MODLYR);
+        }
+        return false;
+        break;
+    case MODLYRM:
+        if (record->event.pressed) {
+            layer_on(_MODLYRM);
+        } else {
+            layer_off(_MODLYRM);
         }
         return false;
         break;
