@@ -18,6 +18,7 @@
 
 #ifdef AUDIO_ENABLE
 #    include "muse.h"
+#    include "song_list.h"
 #endif
 
 enum planck_layers {
@@ -25,11 +26,12 @@ enum planck_layers {
   _GAME,
   _MACOS,
   _MODLYR,
-  _MODLYRM,
   _LOWER,
   _RAISE,
   _PLOVER,
-  _ADJUST
+  _ADJUST,
+  _ADJUST2,
+  _ADJUST3
 };
 
 enum planck_keycodes {
@@ -37,14 +39,15 @@ enum planck_keycodes {
   GAME,
   MACOS,
   MODLYR,
-  MODLYRM,
   PLOVER,
-  BACKLIT,
-  EXT_PLV
+  EXT_PLV,
+  MY_SONG_KEY
 };
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
+
+float my_song[][2] = SONG(FANTASIE_IMPROMPTU);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -99,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-    KC_ESC,  KC_LALT, KC_LCTL, MODLYRM,  LOWER,  LGUI_T(KC_SPC),  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
+    KC_ESC,  KC_LALT, KC_LCTL, MODLYR,  LOWER,  LGUI_T(KC_SPC),  KC_SPC,  RAISE,   KC_UP,   KC_DOWN, KC_LEFT, KC_RGHT
 ),
 
 /* Mod Layer - additional
@@ -114,28 +117,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_MODLYR] = LAYOUT_planck_grid(
-    KC_NUM,  KC_P7,   KC_P8, KC_P9,   _______, _______, _______, _______, _______, _______, _______, _______,
-    KC_CAPS, KC_P4,   KC_P5, KC_P6,   _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, KC_P1,   KC_P2, KC_P3,   KC_PENT, _______, _______, _______, _______, _______, _______, _______,
-    _______, KC_PDOT, KC_P0, _______, _______, _______, _______, _______, _______, _______, _______, _______
-),
-
-/* Mod Layer - Mac Version
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-[_MODLYRM] = LAYOUT_planck_grid(
-    _______, KC_HOME, KC_UP,   KC_PGUP, _______, _______, _______, _______, KC_P7,   KC_P8, KC_P9,   KC_BSPC,
-    KC_CAPS, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, _______, KC_P4,   KC_P5, KC_P6,   _______,
-    KC_MCTL, KC_END,  _______, KC_PGDN, _______, _______, _______, _______, KC_P1,   KC_P2, KC_P3,   KC_PENT,
-    KC_LPAD, _______, _______, _______, _______, _______, _______, _______, _______, KC_P0, KC_PDOT, _______
+    _______, KC_HOME, KC_UP,   KC_PGUP,   _______, _______, _______, KC_NUM,  KC_P7,   KC_P8, KC_P9,   KC_BSPC,
+    KC_CAPS, KC_LEFT, KC_DOWN, KC_RGHT,   _______, _______, _______, _______, KC_P4,   KC_P5, KC_P6,   _______,
+    _______, KC_END,  _______, KC_PGDN,   _______, _______, _______, _______, KC_P1,   KC_P2, KC_P3,   KC_PENT,
+    KC_MCTL, KC_LPAD, _______, _______,   _______, _______, _______, _______, _______, KC_P0, KC_PDOT, _______
 ),
 
 /* Lower
@@ -206,9 +191,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_planck_grid(
     _______, QK_BOOT, DB_TOGG, UG_TOGG, UG_NEXT, UG_HUEU, UG_HUED, UG_SATU, UG_SATD, UG_VALU, UG_VALD, KC_DEL ,
-    _______, _______, MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  GAME,    MACOS,  PLOVER,  _______,
+    _______, _______, MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  GAME,    MACOS,  PLOVER,   _______,
     _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
-    BACKLIT, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
+/* Adjust 3 (Lower + Mod Layer)
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_ADJUST2] = LAYOUT_planck_grid(
+    KC_2,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    MY_SONG_KEY, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
+/* Adjust 3 (Raise + Mod Layer)
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_ADJUST3] = LAYOUT_planck_grid(
+    KC_3,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 )
 
 };
@@ -219,7 +240,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+    state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+    state = update_tri_layer_state(state, _LOWER, _MODLYR, _ADJUST2);
+    state = update_tri_layer_state(state, _RAISE, _MODLYR, _ADJUST3);
+    return state;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -251,31 +275,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
         break;
-    case MODLYRM:
-        if (record->event.pressed) {
-            layer_on(_MODLYRM);
-        } else {
-            layer_off(_MODLYRM);
-        }
-        return false;
-        break;
-    case BACKLIT:
-        if (record->event.pressed) {
-            register_code(KC_RSFT);
-            #ifdef BACKLIGHT_ENABLE
-            backlight_step();
-            #endif
-            #ifdef KEYBOARD_planck_rev5
-            gpio_write_pin_low(E6);
-            #endif
-        } else {
-            unregister_code(KC_RSFT);
-            #ifdef KEYBOARD_planck_rev5
-            gpio_write_pin_high(E6);
-            #endif
-        }
-        return false;
-        break;
     case PLOVER:
         if (record->event.pressed) {
             #ifdef AUDIO_ENABLE
@@ -301,6 +300,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             PLAY_SONG(plover_gb_song);
             #endif
             layer_off(_PLOVER);
+        }
+        return false;
+        break;
+    case MY_SONG_KEY:
+        if (record->event.pressed) {
+            #ifdef AUDIO_ENABLE
+            PLAY_SONG(my_song);
+            #endif
         }
         return false;
         break;
