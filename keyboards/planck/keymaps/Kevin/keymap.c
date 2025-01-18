@@ -79,14 +79,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |      |      | MOD  |Lower |Space |  Alt |Raise |  /  | Left | Down  |Right |
+ * | Ctrl |      |      | MOD  |Raise |Space |  Alt |Lower |  /  | Left | Down  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_GAME] = LAYOUT_planck_grid(
     KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_UP,   KC_ENT,
-    KC_LCTL, XXXXXXX, XXXXXXX, MODLYR,  LOWER,   KC_SPC,  KC_LALT, RAISE,   KC_SLSH, KC_LEFT, KC_DOWN, KC_RGHT
+    KC_LCTL, XXXXXXX, XXXXXXX, MODLYR,  RAISE,   KC_SPC,  KC_LALT, LOWER,   KC_SLSH, KC_LEFT, KC_DOWN, KC_RGHT
 ),
 
 /* Mac OS
@@ -109,13 +109,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Mod Layer - additional
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      | Home |  Up  | PgUp |      |      |      | NumL |  7   |  8   |  9   | BkSp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |CapsL | Left | Down |Right |      |      |      |      |  4   |  5   |  6   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      | End  |      | PgDn |      |      |      |      |  1   |  2   |  3   | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |MisCTL| LPad |      |      |      |      |      |      |      |  0   |  .   |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_MODLYR] = LAYOUT_planck_grid(
@@ -358,9 +358,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         switch (get_highest_layer(layer_state)) {
             case _QWERTY:
                 if (clockwise) {
-                    tap_code(KC_WH_L);
-                } else {
                     tap_code(KC_WH_R);
+                } else {
+                    tap_code(KC_WH_L);
                 }
                 break;
             case _MACOS:
