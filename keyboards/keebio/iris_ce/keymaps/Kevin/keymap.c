@@ -212,11 +212,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (record->event.pressed) {
             SEND_STRING("Macro 3 down");
          } else {
-            SEND_STRING("Macro 4 up");
+            SEND_STRING("Macro 3 up");
          }
          return false;
       default:
          return true;
    }
    return true;
+}
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    for (uint8_t i = led_min; i < led_max; i++) {
+        switch(get_highest_layer(layer_state|default_layer_state)) {
+            case _QWERTY:
+                rgb_matrix_mode(RGB_MATRIX_RAINDROPS);
+                break;
+            case _GAME:
+                rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+                break;
+            case _MACOS:
+                rgb_matrix_mode(RGB_MATRIX_JELLYBEAN_RAINDROPS);
+                break;
+            default:
+                break;
+        }
+    }
+    return false;
 }
