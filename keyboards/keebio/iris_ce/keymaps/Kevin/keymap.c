@@ -182,16 +182,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case QWERTY:
          if (record->event.pressed) {
             set_single_persistent_default_layer(_QWERTY);
+            rgb_matrix_mode(RGB_MATRIX_CYCLE_LEFT_RIGHT);
          }
          return false;
       case GAME:
          if (record->event.pressed) {
             set_single_persistent_default_layer(_GAME);
+            rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE);
          }
          return false;
       case MACOS:
          if (record->event.pressed) {
             set_single_persistent_default_layer(_MACOS);
+            rgb_matrix_mode(RGB_MATRIX_JELLYBEAN_RAINDROPS);
          }
          return false;
       case MACRO1:
@@ -221,21 +224,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
    return true;
 }
 
-bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    for (uint8_t i = led_min; i < led_max; i++) {
-        switch(get_highest_layer(layer_state|default_layer_state)) {
-            case _QWERTY:
-                rgb_matrix_mode(RGB_MATRIX_RAINDROPS);
-                break;
-            case _GAME:
-                rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
-                break;
-            case _MACOS:
-                rgb_matrix_mode(RGB_MATRIX_JELLYBEAN_RAINDROPS);
-                break;
-            default:
-                break;
-        }
-    }
-    return false;
-}
+// bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+//    //  for (uint8_t i = led_min; i < led_max; i++) {
+//         switch(get_highest_layer(layer_state|default_layer_state)) {
+//             case _QWERTY:
+//                 rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_LEFT_RIGHT);
+//                 break;
+//             case _GAME:
+//                 rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+//                 break;
+//             case _MACOS:
+//                 rgb_matrix_mode_noeeprom(RGB_MATRIX_JELLYBEAN_RAINDROPS);
+//                 break;
+//             default:
+//                 break;
+//         }
+//    //  }
+//     return false;
+// }
