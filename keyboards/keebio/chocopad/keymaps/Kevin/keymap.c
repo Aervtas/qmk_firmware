@@ -3,8 +3,6 @@
 
 #include QMK_KEYBOARD_H
 
-#define caps_lock_led 11
-
 enum custom_keycodes {
   MACRO1 = SAFE_RANGE,
   MACRO2,
@@ -16,9 +14,6 @@ enum custom_layers {
   _FN1,
   _FN2
 };
-
-static bool caps_active = false;
-static uint8_t saved_mode;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -38,19 +33,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     RGB_TOG,  RGB_HUI,  RGB_SAI,  RGB_VAI,
     RGB_MOD,  RGB_HUD,  RGB_SAD,  RGB_VAD,
     _______,  _______,  _______,  QK_BOOT,
-    BL_STEP,  _______,  _______,  _______
+    _______,  _______,  _______,  _______
   )
 
 };
-
-const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-  {11, 1, HSV_RED}
-);
-
-bool led_update_user(led_t led_state) {
-  rgblight_set_layer_state(0, led_state.caps_lock);
-  return true;
-}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch(keycode) {
@@ -79,4 +65,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return true;
   }
   return true;
+}
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+  if (host_keyboard_led_state().num_lock) {
+    for (uint8_t i = led_min; i < led_max; i++) {
+      if (g_led_config.flags[i] & LED_FLAG_KEYLIGHT) {
+        rgb_matrix_set_color(i, RGB_RED);
+      }
+    }
+  }
+
+  return false;
 }
